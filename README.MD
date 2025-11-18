@@ -1,4 +1,4 @@
-cd docker
-docker-compose up -d
-pour cree une image dans docker posgress.yaml
-docker compose -f posgress.yaml up -d
+cd docker \n
+docker-compose up -d \n
+pour cree une image dans docker posgress.yaml \n
+docker compose -f posgress.yaml up -d  \n 
