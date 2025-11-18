@@ -1,7 +1,9 @@
-cd docker \n
+pour executer base de donne sur docker :
 
-docker-compose up -d \n
+cd docker   
 
-pour cree une image dans docker posgress.yaml \n
+docker-compose up -d 
 
-docker compose -f posgress.yaml up -d  \n 
+pour cree une image dans docker posgress.yaml 
+
+docker compose -f posgress.yaml up -d  
