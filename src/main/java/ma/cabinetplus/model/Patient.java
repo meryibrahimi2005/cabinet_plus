@@ -1,5 +1,4 @@
 package ma.cabinetplus.model;
-
 import java.time.LocalDate;
 
 public class Patient extends Personne {
@@ -25,11 +24,13 @@ public class Patient extends Personne {
         return numeroDossier;
     }
     public String getAdresse() {
+
         return adresse;
     }
     public String getEmail() {
         return email;
     }
+
     @Override
     public String toString() {
         return "Patient { " +
