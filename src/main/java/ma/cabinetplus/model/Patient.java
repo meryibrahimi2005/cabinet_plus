@@ -24,11 +24,15 @@ public class Patient extends Personne {
     public String getNumeroDossier() {
         return numeroDossier;
     }
-    public String getAdresse() { return adresse; }
-    public String getEmail() { return email; }
+    public String getAdresse() {
+        return adresse;
+    }
+    public String getEmail() {
+        return email;
+    }
     @Override
     public String toString() {
-        return "Patient{" +
+        return "Patient { " +
                 "nom='" + nom + '\'' +
                 ", prenom='" + prenom + '\'' +
                 ", username='" + username + '\'' +
