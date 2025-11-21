@@ -20,6 +20,12 @@ public class Patient extends Personne {
         this.adresse = adresse;
         this.numeroDossier = numeroDossier;
     }
+    public  LocalDate getDateNaissance() {
+        return dateNaissance;
+    }
+    public String getTelephone() {
+        return telephone;
+    }
     public String getNumeroDossier() {
         return numeroDossier;
     }
