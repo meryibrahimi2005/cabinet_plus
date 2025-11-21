@@ -179,8 +179,7 @@ public class Main {
                 numDossier,
                 date,
                 prix,
-                note,
-                StatutRendezVous.TERMINE   // ✅ consultation réalisée
+                note// ✅ consultation réalisée
         );
         consultations.add(consultation);
 
