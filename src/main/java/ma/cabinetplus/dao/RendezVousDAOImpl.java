@@ -29,6 +29,21 @@ public class RendezVousDAOImpl implements RendezVousDAO {
         }
     }
 
+    @Override
+    public void supprimer(Long id) {
+        String sql = "DELETE FROM rendezvous WHERE id=?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setLong(1, id);
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     private int getPatientId(String numeroDossier) throws SQLException {
         String sql = "SELECT id FROM patient WHERE numero_dossier=?";
         try (Connection conn = DatabaseConnection.getConnection();

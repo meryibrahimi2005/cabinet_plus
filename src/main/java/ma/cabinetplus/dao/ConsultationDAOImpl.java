@@ -28,6 +28,21 @@ public class ConsultationDAOImpl implements ConsultationDAO {
     }
 
     @Override
+    public void supprimer(Long id) {
+        String sql = "DELETE FROM consultation WHERE id=?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setLong(1, id);
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Override
     public List<Consultation> trouverParPatient(int patientId) {
         List<Consultation> list = new ArrayList<>();
         String sql = "SELECT * FROM consultation WHERE patient_id=?";

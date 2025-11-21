@@ -11,6 +11,7 @@ public class MedecinDAOImpl implements MedecinDAO {
     @Override
     public void ajouter(Medecin medecin) {
         String sql = "INSERT INTO medecin (nom, prenom, username, password) VALUES (?, ?, ?, ?)";
+
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -27,25 +28,80 @@ public class MedecinDAOImpl implements MedecinDAO {
     }
 
     @Override
-    public Medecin trouverParUsername(String username) {
-        String sql = "SELECT * FROM medecin WHERE username=?";
+    public void supprimer(Integer id) {
+        String sql = "DELETE FROM medecin WHERE id = ?";
+
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, username);
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public Medecin trouverParId(Integer id) {
+        String sql = "SELECT * FROM medecin WHERE id = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+
             ResultSet rs = stmt.executeQuery();
+
             if (rs.next()) {
-                return new Medecin(
+                // IMPORTANT : ton constructeur prend EXACTEMENT ces 5 paramètres !
+                Medecin m = new Medecin(
+                        rs.getInt("id"),
                         rs.getString("nom"),
                         rs.getString("prenom"),
                         rs.getString("username"),
                         rs.getString("password")
                 );
+
+                // L'id n'est pas stocké dans le constructeur → on doit le remettre :
+                m.setId(rs.getInt("id"));
+
+                return m;
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        return null;
+    }
+
+    @Override
+    public Medecin trouverParUsername(String username) {
+        String sql = "SELECT * FROM medecin WHERE username = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                Medecin m = new Medecin(
+                        rs.getInt("id"),
+                        rs.getString("nom"),
+                        rs.getString("prenom"),
+                        rs.getString("username"),
+                        rs.getString("password")
+                );
+                m.setId(rs.getInt("id"));
+                return m;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         return null;
     }
 
@@ -53,22 +109,30 @@ public class MedecinDAOImpl implements MedecinDAO {
     public List<Medecin> trouverTous() {
         List<Medecin> medecins = new ArrayList<>();
         String sql = "SELECT * FROM medecin";
+
         try (Connection conn = DatabaseConnection.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
-                medecins.add(new Medecin(
+
+                Medecin m = new Medecin(
+                        rs.getInt("id"),
                         rs.getString("nom"),
                         rs.getString("prenom"),
                         rs.getString("username"),
                         rs.getString("password")
-                ));
+                );
+
+                m.setId(rs.getInt("id"));
+
+                medecins.add(m);
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return medecins;
     }
 }
