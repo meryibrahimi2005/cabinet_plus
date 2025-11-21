@@ -1,6 +1,7 @@
 package ma.cabinetplus.dao;
 
 import ma.cabinetplus.model.Medecin;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,7 @@ public class MedecinDAOImpl implements MedecinDAO {
                         rs.getString("password")
                 );
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

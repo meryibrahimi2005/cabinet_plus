@@ -5,7 +5,6 @@ import ma.cabinetplus.model.StatutRendezVous;
 import ma.cabinetplus.model.Patient;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +33,7 @@ public class RendezVousDAOImpl implements RendezVousDAO {
         String sql = "SELECT id FROM patient WHERE numero_dossier=?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setString(1, numeroDossier);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
@@ -52,6 +52,7 @@ public class RendezVousDAOImpl implements RendezVousDAO {
             stmt.setString(1, statut.name());
             stmt.setLong(2, id);
             stmt.executeUpdate();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -115,6 +116,7 @@ public class RendezVousDAOImpl implements RendezVousDAO {
     private RendezVous mapRdv(ResultSet rs) throws SQLException {
         int patientId = rs.getInt("patient_id");
         Patient patient = new PatientDAOImpl().trouverParId(patientId);
+
         return new RendezVous(
                 rs.getLong("id"),
                 rs.getDate("date").toLocalDate(),
