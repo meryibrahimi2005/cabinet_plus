@@ -11,16 +11,13 @@ public class Consultation {
     private String note;
     private StatutRendezVous statut;
 
-    public Consultation(Long id, Patient patient, String numeroDossier,
-                        LocalDate date, double prix, String note,
-                        StatutRendezVous statut) {
+    public Consultation(Long id, Patient patient, String numeroDossier, LocalDate date, double prix, String note) {
         this.id = id;
         this.patient = patient;
         this.numeroDossier = numeroDossier;
         this.date = date;
         this.prix = prix;
         this.note = note;
-        this.statut = statut;
     }
 
 

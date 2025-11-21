@@ -2,7 +2,7 @@ package ma.cabinetplus.model;
 import java.time.LocalDate;
 
 public class Patient extends Personne {
-
+    private int id;
     private LocalDate dateNaissance;
     private String telephone;
     private String email;
@@ -20,6 +20,11 @@ public class Patient extends Personne {
         this.adresse = adresse;
         this.numeroDossier = numeroDossier;
     }
+
+    public int getId() {
+        return id;
+    }
+
     public  LocalDate getDateNaissance() {
         return dateNaissance;
     }
