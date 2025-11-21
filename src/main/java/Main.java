@@ -10,6 +10,7 @@ import java.util.Scanner;
 import ma.cabinetplus.model.Consultation;
 
 
+
 public class Main {
 
     // 🔹 Liste de tous les patients du système
@@ -17,6 +18,7 @@ public class Main {
     private static List<RendezVous> rendezVousList = new ArrayList<>();
     // 🔹 Toutes les consultations effectuées
     private static List<Consultation> consultations = new ArrayList<>();
+    private static long nextConsultationId = 1;   // pour générer les IDs
 
     //    Login  : medecin
     //    Mot de passe : 1234
@@ -95,6 +97,7 @@ public class Main {
             System.out.println("2. Voir tous les rendez-vous");
             System.out.println("3. Ajouter une consultation");
             System.out.println("4. Voir toutes les consultations");
+            System.out.println("5. Changer le statut d'une consultation");
             System.out.println("0. Déconnexion");
             System.out.print("Votre choix : ");
 
@@ -120,6 +123,9 @@ public class Main {
                     break;
                 case 4:
                     afficherConsultations();
+                    break;
+                case 5:
+                    changerStatutConsultation(scanner);   // ✅ nouvelle méthode
                     break;
                 case 0:
                     System.out.println("Déconnexion du médecin.\n");
@@ -165,18 +171,22 @@ public class Main {
 
         System.out.print("Note / rapport de consultation : ");
         String note = scanner.nextLine();
-
+        LocalDate date = LocalDate.now();
         Long id = (long) (consultations.size() + 1);
-        Consultation c = new Consultation(
+        Consultation consultation = new Consultation(
                 id,
                 patientTrouve,
                 numDossier,
-                LocalDate.now(), // date du jour
+                date,
                 prix,
-                note
+                note,
+                StatutRendezVous.TERMINE   // ✅ consultation réalisée
         );
+        consultations.add(consultation);
 
-        consultations.add(c);
+
+
+        consultations.add(consultation);
 
         System.out.println("✅ Consultation enregistrée avec succès.\n");
     }
@@ -345,6 +355,72 @@ public class Main {
             }
         }
     }
+    // Liste des consultations dans le système
+    //private static List<Consultation> consultations = new ArrayList<>();
+
+    private static void changerStatutConsultation(Scanner scanner) {
+        System.out.println("\n--- Changer le statut d'une consultation ---");
+
+        if (consultations.isEmpty()) {
+            System.out.println("Aucune consultation enregistrée.");
+            return;
+        }
+
+        // 1. Afficher toutes les consultations avec leur id et statut
+        for (Consultation c : consultations) {
+            System.out.println("ID=" + c.getId() +
+                    ", dossier=" + c.getNumeroDossier() +
+                    ", patient=" + c.getPatient().getNom() + " " + c.getPatient().getPrenom() +
+                    ", statut=" + c.getStatut());
+        }
+
+        // 2. Demander quelle consultation modifier
+        System.out.print("\nEntrez l'ID de la consultation à modifier : ");
+        long idChoisi = Long.parseLong(scanner.nextLine());
+
+        Consultation consultationTrouvee = null;
+        for (Consultation c : consultations) {
+            if (c.getId() == idChoisi) {
+                consultationTrouvee = c;
+                break;
+            }
+        }
+
+        if (consultationTrouvee == null) {
+            System.out.println("❌ Aucune consultation trouvée avec cet ID.");
+            return;
+        }
+
+        // 3. Demander le nouveau statut
+        System.out.println("Statut actuel : " + consultationTrouvee.getStatut());
+        System.out.println("Choisissez le nouveau statut :");
+        System.out.println("1. Terminée");
+        System.out.println("2. Annulée");
+        System.out.println("3. Prévue");
+        System.out.print("Votre choix : ");
+
+        int choix = Integer.parseInt(scanner.nextLine());
+        StatutRendezVous nouveauStatut;
+
+        switch (choix) {
+            case 1:
+                nouveauStatut = StatutRendezVous.TERMINE;
+                break;
+            case 2:
+                nouveauStatut = StatutRendezVous.ANNULE;
+                break;
+            case 3:
+                nouveauStatut = StatutRendezVous.PREVU;
+                break;
+            default:
+                System.out.println("Choix invalide. Annulation de l'opération.");
+                return;
+        }
+
+        consultationTrouvee.setStatut(nouveauStatut);
+        System.out.println("✅ Statut mis à jour : " + consultationTrouvee.getStatut());
+    }
+
     private static void afficherRendezVous() {
         System.out.println("\n--- Liste des rendez-vous ---");
 

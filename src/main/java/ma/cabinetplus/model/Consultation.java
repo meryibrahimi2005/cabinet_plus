@@ -1,5 +1,4 @@
 package ma.cabinetplus.model;
-
 import java.time.LocalDate;
 
 public class Consultation {
@@ -10,16 +9,20 @@ public class Consultation {
     private LocalDate date;
     private double prix;
     private String note;
+    private StatutRendezVous statut;
 
     public Consultation(Long id, Patient patient, String numeroDossier,
-                        LocalDate date, double prix, String note) {
+                        LocalDate date, double prix, String note,
+                        StatutRendezVous statut) {
         this.id = id;
         this.patient = patient;
         this.numeroDossier = numeroDossier;
         this.date = date;
         this.prix = prix;
         this.note = note;
+        this.statut = statut;
     }
+
 
     public Long getId() {
         return id;
@@ -44,6 +47,14 @@ public class Consultation {
     public String getNote() {
         return note;
     }
+    public StatutRendezVous getStatut() {
+        return statut;
+    }
+
+    public void setStatut(StatutRendezVous statut) {
+        this.statut = statut;
+    }
+
 
     @Override
     public String toString() {
@@ -54,6 +65,8 @@ public class Consultation {
                 ", patient=" + patient.getNom() + " " + patient.getPrenom() +
                 ", numeroDossier='" + numeroDossier + '\'' +
                 ", note='" + note + '\'' +
+                ", statut=" + statut +
                 '}';
     }
+
 }
