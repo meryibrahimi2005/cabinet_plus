@@ -52,3 +52,9 @@ date_consultation DATE,
 prix DOUBLE PRECISION,
 note TEXT
 );
+
+
+connexion medecin : 
+
+login : medecin 
+pass : 1234
