@@ -2,7 +2,7 @@ package ma.cabinetplus.service;
 
 import ma.cabinetplus.dao.ConsultationDAO;
 import ma.cabinetplus.dao.ConsultationDAOImpl;
-import ma.cabinetplus.model.Consultation;
+import ma.cabinetplus.Consultation;
 
 import java.util.List;
 

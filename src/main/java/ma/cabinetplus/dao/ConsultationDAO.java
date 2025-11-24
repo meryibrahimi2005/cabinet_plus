@@ -1,6 +1,6 @@
 package ma.cabinetplus.dao;
 
-import ma.cabinetplus.model.Consultation;
+import ma.cabinetplus.Consultation;
 import java.util.List;
 
 public interface ConsultationDAO extends GenericDAO<Consultation, Long> {

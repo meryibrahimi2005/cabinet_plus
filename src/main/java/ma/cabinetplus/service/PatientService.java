@@ -1,6 +1,6 @@
 package ma.cabinetplus.service;
 
-import ma.cabinetplus.model.Patient;
+import ma.cabinetplus.Patient;
 
 public interface PatientService extends GenericService<Patient, Integer> {
     Patient trouverParNumeroDossier(String numeroDossier);

@@ -1,8 +1,8 @@
 package ma.cabinetplus.dao;
 
-import ma.cabinetplus.model.RendezVous;
-import ma.cabinetplus.model.StatutRendezVous;
-import ma.cabinetplus.model.Patient;
+import ma.cabinetplus.RendezVous;
+import ma.cabinetplus.StatutRendezVous;
+import ma.cabinetplus.Patient;
 
 import java.sql.*;
 import java.util.ArrayList;

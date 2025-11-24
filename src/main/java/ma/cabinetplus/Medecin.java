@@ -1,4 +1,4 @@
-package ma.cabinetplus.model;
+package ma.cabinetplus;
 
 public class Medecin extends Personne {
     private int id;

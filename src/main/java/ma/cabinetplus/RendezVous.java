@@ -1,4 +1,4 @@
-package ma.cabinetplus.model;
+package ma.cabinetplus;
 
 import java.time.LocalDate;
 
