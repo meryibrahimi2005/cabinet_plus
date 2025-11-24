@@ -26,7 +26,8 @@ public class Main {
             "Ahmed",        // nom
             "Fahmi",        // prénom
             "medecin",      // username / login
-            "1234"          // password
+            "1234"    ,      // password
+
     );
 
     public static void main(String[] args) {
