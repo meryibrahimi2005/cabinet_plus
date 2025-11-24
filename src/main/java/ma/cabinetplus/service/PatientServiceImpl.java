@@ -2,7 +2,7 @@ package ma.cabinetplus.service;
 
 import ma.cabinetplus.dao.PatientDAO;
 import ma.cabinetplus.dao.PatientDAOImpl;
-import ma.cabinetplus.Patient;
+import ma.cabinetplus.model.Patient;
 import java.util.List;
 
 public class PatientServiceImpl implements PatientService {

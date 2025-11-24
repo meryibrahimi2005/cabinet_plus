@@ -2,8 +2,8 @@ package ma.cabinetplus.service;
 
 import ma.cabinetplus.dao.RendezVousDAO;
 import ma.cabinetplus.dao.RendezVousDAOImpl;
-import ma.cabinetplus.RendezVous;
-import ma.cabinetplus.StatutRendezVous;
+import ma.cabinetplus.model.RendezVous;
+import ma.cabinetplus.model.StatutRendezVous;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package ma.cabinetplus.dao;
 
-import ma.cabinetplus.Patient;
+import ma.cabinetplus.model.Patient;
 
 public interface PatientDAO extends GenericDAO<Patient, Integer> {
     Patient trouverParNumeroDossier(String numeroDossier);

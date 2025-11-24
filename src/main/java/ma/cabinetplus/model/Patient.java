@@ -1,4 +1,4 @@
-package ma.cabinetplus;
+package ma.cabinetplus.model;
 import java.time.LocalDate;
 
 public class Patient extends Personne {

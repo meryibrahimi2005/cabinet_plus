@@ -1,4 +1,4 @@
-package ma.cabinetplus;
+package ma.cabinetplus.model;
 
 public enum Role {
     MEDECIN,

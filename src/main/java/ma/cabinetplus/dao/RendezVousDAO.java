@@ -1,7 +1,7 @@
 package ma.cabinetplus.dao;
 
-import ma.cabinetplus.RendezVous;
-import ma.cabinetplus.StatutRendezVous;
+import ma.cabinetplus.model.RendezVous;
+import ma.cabinetplus.model.StatutRendezVous;
 import java.util.List;
 
 public interface RendezVousDAO extends GenericDAO<RendezVous, Long> {

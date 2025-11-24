@@ -1,6 +1,6 @@
 package ma.cabinetplus.service;
 
-import ma.cabinetplus.Consultation;
+import ma.cabinetplus.model.Consultation;
 import java.util.List;
 
 public interface ConsultationService extends GenericService<Consultation, Long> {

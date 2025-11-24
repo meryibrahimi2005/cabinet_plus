@@ -1,13 +1,13 @@
-import ma.cabinetplus.Medecin;
-import ma.cabinetplus.Patient;
-import ma.cabinetplus.RendezVous;
-import ma.cabinetplus.StatutRendezVous;
-
+import ma.cabinetplus.model.Medecin;
+import ma.cabinetplus.model.Patient;
+import ma.cabinetplus.model.RendezVous;
+import ma.cabinetplus.model.StatutRendezVous;
+import ma.cabinetplus.model.Role;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import ma.cabinetplus.Consultation;
+import ma.cabinetplus.model.Consultation;
 
 
 

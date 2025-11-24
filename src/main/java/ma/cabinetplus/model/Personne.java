@@ -1,4 +1,5 @@
-package ma.cabinetplus;
+package ma.cabinetplus.model;
+import ma.cabinetplus.model.Role;
 
 public class Personne {
 

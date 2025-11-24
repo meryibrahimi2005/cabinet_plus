@@ -1,0 +1,52 @@
+package ma.cabinetplus.model;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class MedecinTest {
+
+    private Medecin medecin;
+
+    @BeforeEach
+    void setUp() {
+        medecin = new Medecin(
+                10,
+                "Samira",
+                "Haddou",
+                "samira.h",
+                "pass123"
+        );
+    }
+
+    @Test
+    void testConstructorAndGetters() {
+        // Vérifie l'id
+        assertEquals(10, medecin.getId());
+
+        // Champs hérités de Personne
+        assertEquals("Samira", medecin.getNom());
+        assertEquals("Haddou", medecin.getPrenom());
+        assertEquals("samira.h", medecin.getUsername());
+        assertEquals("pass123", medecin.getPassword());
+        assertEquals(Role.MEDECIN, medecin.getRole());
+    }
+
+    @Test
+    void testSetId() {
+        medecin.setId(50);
+        assertEquals(50, medecin.getId());
+    }
+
+    @Test
+    void testToStringContainsInformation() {
+        String str = medecin.toString();
+
+        assertNotNull(str);
+        assertTrue(str.contains("Samira"));
+        assertTrue(str.contains("Haddou"));
+        assertTrue(str.contains("samira.h"));
+        assertTrue(str.startsWith("Medecin"));
+    }
+}

@@ -1,4 +1,4 @@
-package ma.cabinetplus;
+package ma.cabinetplus.model;
 
 /**
  * Statut possible d'un rendez-vous médical.
