@@ -5,6 +5,14 @@
 
     <modelVersion>4.0.0</modelVersion>
 
+    <repositories>
+        <repository>
+            <id>central</id>
+            <url>https://repo.maven.apache.org/maven2</url>
+        </repository>
+    </repositories>
+
+
     <groupId>ma.cabinetplus</groupId>
     <artifactId>cabinetPlus</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -23,6 +31,8 @@
             <artifactId>postgresql</artifactId>
             <version>42.7.1</version>
         </dependency>
+
+
 
     </dependencies>
 

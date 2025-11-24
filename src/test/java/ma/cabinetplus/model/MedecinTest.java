@@ -22,10 +22,8 @@ class MedecinTest {
 
     @Test
     void testConstructorAndGetters() {
-        // Vérifie l'id
-        assertEquals(10, medecin.getId());
 
-        // Champs hérités de Personne
+        assertEquals(10, medecin.getId());
         assertEquals("Samira", medecin.getNom());
         assertEquals("Haddou", medecin.getPrenom());
         assertEquals("samira.h", medecin.getUsername());
