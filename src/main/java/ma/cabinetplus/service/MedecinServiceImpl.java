@@ -3,6 +3,8 @@ package ma.cabinetplus.service;
 import ma.cabinetplus.dao.MedecinDAO;
 import ma.cabinetplus.dao.MedecinDAOImpl;
 import ma.cabinetplus.model.Medecin;
+import ma.cabinetplus.service.MedecinService;
+
 import java.util.List;
 
 public class MedecinServiceImpl implements MedecinService {
@@ -10,28 +12,35 @@ public class MedecinServiceImpl implements MedecinService {
     private MedecinDAO medecinDAO = new MedecinDAOImpl();
 
     @Override
-    public void ajouter(Medecin medecin) {
+    public void ajouterMedecin(Medecin medecin) {
+        // Vérifier l'unicité du username
+        if (medecinDAO.trouverParUsername(medecin.getUsername()) != null) {
+            throw new RuntimeException("Username déjà utilisé !");
+        }
+
         medecinDAO.ajouter(medecin);
     }
 
     @Override
-    public void supprimer(Integer id) {
-        // Optionnel: ajouter méthode supprimer dans MedecinDAO si nécessaire
+    public void supprimerMedecin(int id) {
+        if (medecinDAO.trouverParId(id) == null) {
+            throw new RuntimeException("Médecin inexistant !");
+        }
+        medecinDAO.supprimer(id);
     }
 
     @Override
-    public Medecin trouverParId(Integer id) {
-        // Optionnel: implémenter dans DAO si nécessaire
-        return null;
-    }
-
-    @Override
-    public List<Medecin> trouverTous() {
-        return medecinDAO.trouverTous();
+    public Medecin trouverParId(int id) {
+        return medecinDAO.trouverParId(id);
     }
 
     @Override
     public Medecin trouverParUsername(String username) {
         return medecinDAO.trouverParUsername(username);
+    }
+
+    @Override
+    public List<Medecin> trouverTous() {
+        return medecinDAO.trouverTous();
     }
 }
