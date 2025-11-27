@@ -18,10 +18,10 @@ public class RendezVousServiceImpl implements RendezVousService {
     public void ajouterRendezVous(RendezVous rdv) {
 
         if (patientDAO.trouverParId(rdv.getPatient().getId()) == null)
-            throw new RuntimeException("Patient introuvable !");
+            throw new RuntimeException("Patient introuvable !");     // verifier si patient existe deja
 
         if (rdv.getDate().isBefore(LocalDate.now()))
-            throw new RuntimeException("Impossible d’ajouter un RDV dans le passé !");
+            throw new RuntimeException("Impossible d’ajouter un RDV dans le passé !");   // date rendez vous dans passe
 
         // vérifier si le patient a un rdv au même moment
         List<RendezVous> existants = rdvDAO.trouverParPatient(rdv.getPatient().getId());

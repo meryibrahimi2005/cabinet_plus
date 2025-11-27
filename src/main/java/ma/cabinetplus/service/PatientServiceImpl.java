@@ -16,13 +16,13 @@ public class PatientServiceImpl implements PatientService {
     public void ajouterPatient(Patient patient) {
 
         if (patientDAO.trouverParUsername(patient.getUsername()) != null)
-            throw new RuntimeException("Username déjà utilisé !");
+            throw new RuntimeException("Username déjà utilisé !");         //username unique
 
         if (patientDAO.trouverParNumeroDossier(patient.getNumeroDossier()) != null)
-            throw new RuntimeException("Numéro de dossier déjà existant !");
+            throw new RuntimeException("Numéro de dossier déjà existant !");       // num dossier unique
 
         if (patient.getDateNaissance().isAfter(LocalDate.now()))
-            throw new RuntimeException("La date de naissance est invalide.");
+            throw new RuntimeException("La date de naissance est invalide.");       // date naissance pas futur
 
         patientDAO.ajouter(patient);
     }
