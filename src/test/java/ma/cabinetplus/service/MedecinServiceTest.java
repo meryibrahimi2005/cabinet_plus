@@ -1,53 +1,54 @@
 package ma.cabinetplus.service;
 
-import ma.cabinetplus.dao.MedecinDAO;
 import ma.cabinetplus.model.Medecin;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
-public class MedecinServiceTest {
+class MedecinServiceTest {
 
-    @Mock
-    private MedecinDAO medecinDAO;
-
-    @InjectMocks
-    private MedecinServiceImpl service;
+    private MedecinService medecinService;
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
+        medecinService = new MedecinServiceImpl();
     }
 
     @Test
-    void testAjouterMedecin_Success() throws Exception {
-        Medecin m = new Medecin(1, "Ahmed", "Ali", "ahmed", "pass");
+    void testAjouterMedecinEtTrouverParUsername() {
+        Medecin med = new Medecin(0, "Ali", "Khalid", "akhalid", "pass123");
+        medecinService.ajouterMedecin(med);
 
-        when(medecinDAO.trouverParUsername("ahmed")).thenReturn(null);
-
-        assertDoesNotThrow(() -> service.ajouterMedecin(m));
-
-        verify(medecinDAO, times(1)).ajouter(m);
+        Medecin trouvé = medecinService.trouverParUsername("akhalid");
+        assertNotNull(trouvé);
+        assertEquals("Ali", trouvé.getNom());
+        assertEquals("Khalid", trouvé.getPrenom());
     }
 
     @Test
-    void testAjouterMedecin_UsernameExiste() {
-        Medecin m = new Medecin(1, "Ahmed", "Ali", "ahmed", "pass");
+    void testAjouterMedecinUsernameExist() {
+        Medecin med1 = new Medecin(0, "Test", "User", "dup", "pass");
+        medecinService.ajouterMedecin(med1);
 
-        when(medecinDAO.trouverParUsername("ahmed")).thenReturn(m);
-
-        assertThrows(Exception.class, () -> service.ajouterMedecin(m));
+        Medecin med2 = new Medecin(0, "Test2", "User2", "dup", "pass2");
+        RuntimeException exception = assertThrows(RuntimeException.class,
+                () -> medecinService.ajouterMedecin(med2));
+        assertEquals("Username déjà utilisé !", exception.getMessage());
     }
 
     @Test
-    void testAjouterMedecin_ChampVide() {
-        Medecin m = new Medecin(1, "", "Ali", "ahmed", "pass");
+    void testTrouverTousMedecins() {
+        List<Medecin> medecins = medecinService.trouverTous();
+        assertNotNull(medecins);
+    }
 
-        assertThrows(Exception.class, () -> service.ajouterMedecin(m));
+    @Test
+    void testSupprimerMedecinInexistant() {
+        RuntimeException exception = assertThrows(RuntimeException.class,
+                () -> medecinService.supprimerMedecin(-1));
+        assertEquals("Médecin inexistant !", exception.getMessage());
     }
 }

@@ -58,3 +58,5 @@ connexion medecin :
 
 login : medecin 
 pass : 1234
+
+pour connecter la base : docker exec -it cabinet_postgress psql -U cabinet -d cabinet_db
