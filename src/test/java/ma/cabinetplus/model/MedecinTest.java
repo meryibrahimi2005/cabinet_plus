@@ -12,7 +12,7 @@ class MedecinTest {
     @BeforeEach
     void setUp() {
         medecin = new Medecin(
-                10,
+                10L,
                 "Samira",
                 "Haddou",
                 "samira.h",
@@ -33,8 +33,8 @@ class MedecinTest {
 
     @Test
     void testSetId() {
-        medecin.setId(50);
-        assertEquals(50, medecin.getId());
+        medecin.setId(50L);
+        assertEquals(50L, medecin.getId());
     }
 
     @Test

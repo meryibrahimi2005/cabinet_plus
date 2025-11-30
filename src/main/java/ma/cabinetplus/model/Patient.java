@@ -24,6 +24,10 @@ public class Patient extends Personne {
     public Long getId() {
         return id;
     }
+    
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public  LocalDate getDateNaissance() {
         return dateNaissance;

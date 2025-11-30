@@ -1,15 +1,18 @@
 package ma.cabinetplus.dao;
 
 import ma.cabinetplus.model.Patient;
+import ma.cabinetplus.exception.DataAccessException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class PatientDAOImpl implements PatientDAO {
 
     @Override
     public void ajouter(Patient patient) {
-        String sql = "INSERT INTO patient (nom, prenom, username, password, date_naissance, telephone, email, adresse, numero_dossier) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO patient (nom, prenom, username, password, date_naissance, " +
+                     "telephone, email, adresse, numero_dossier) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -26,7 +29,7 @@ public class PatientDAOImpl implements PatientDAO {
             stmt.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DataAccessException("Failed to add patient: " + e.getMessage(), e);
         }
     }
 
@@ -38,31 +41,34 @@ public class PatientDAOImpl implements PatientDAO {
             stmt.setLong(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DataAccessException("Failed to delete patient: " + e.getMessage(), e);
         }
     }
 
     @Override
-    public Patient trouverParId(Long id) {
-        String sql = "SELECT * FROM patient WHERE id=?";
+    public Optional<Patient> trouverParId(Long id) {
+        String sql = "SELECT id, nom, prenom, username, password, date_naissance, " +
+                     "telephone, email, adresse, numero_dossier FROM patient WHERE id = ?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setLong(1, id);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                return mapPatient(rs);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return Optional.of(mapPatient(rs));
+                }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DataAccessException("Failed to find patient: " + e.getMessage(), e);
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override
     public List<Patient> trouverTous() {
         List<Patient> patients = new ArrayList<>();
-        String sql = "SELECT * FROM patient";
+        String sql = "SELECT id, nom, prenom, username, password, date_naissance, " +
+                     "telephone, email, adresse, numero_dossier FROM patient";
         try (Connection conn = DatabaseConnection.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
@@ -72,49 +78,53 @@ public class PatientDAOImpl implements PatientDAO {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DataAccessException("Failed to retrieve patients: " + e.getMessage(), e);
         }
         return patients;
     }
 
     @Override
-    public Patient trouverParNumeroDossier(String numeroDossier) {
-        String sql = "SELECT * FROM patient WHERE numero_dossier=?";
+    public Optional<Patient> trouverParNumeroDossier(String numeroDossier) {
+        String sql = "SELECT id, nom, prenom, username, password, date_naissance, " +
+                     "telephone, email, adresse, numero_dossier FROM patient WHERE numero_dossier = ?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, numeroDossier);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                return mapPatient(rs);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return Optional.of(mapPatient(rs));
+                }
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DataAccessException("Failed to find patient by dossier: " + e.getMessage(), e);
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override
-    public Patient trouverParUsername(String username) {
-        String sql = "SELECT * FROM patient WHERE username=?";
+    public Optional<Patient> trouverParUsername(String username) {
+        String sql = "SELECT id, nom, prenom, username, password, date_naissance, " +
+                     "telephone, email, adresse, numero_dossier FROM patient WHERE username = ?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, username);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                return mapPatient(rs);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return Optional.of(mapPatient(rs));
+                }
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DataAccessException("Failed to find patient by username: " + e.getMessage(), e);
         }
-        return null;
+        return Optional.empty();
     }
 
     private Patient mapPatient(ResultSet rs) throws SQLException {
-        return new Patient(
+        Patient p = new Patient(
                 rs.getString("nom"),
                 rs.getString("prenom"),
                 rs.getString("username"),
@@ -125,5 +135,7 @@ public class PatientDAOImpl implements PatientDAO {
                 rs.getString("adresse"),
                 rs.getString("numero_dossier")
         );
+        p.setId(rs.getLong("id"));
+        return p;
     }
 }

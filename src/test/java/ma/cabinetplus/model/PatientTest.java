@@ -48,8 +48,8 @@ class PatientTest {
 
     @Test
     void testIdDefaultValue() {
-        // id n'est jamais défini → il doit être à 0 par défaut (primitive int)
-        assertEquals(0, patient.getId());
+        // id n'est jamais défini → il doit être à null par défaut (Long object)
+        assertNull(patient.getId());
     }
 
     @Test

@@ -14,7 +14,7 @@ public class MedecinServiceImpl implements MedecinService {
     @Override
     public void ajouterMedecin(Medecin medecin) {
         // Vérifier l'unicité du username
-        if (medecinDAO.trouverParUsername(medecin.getUsername()) != null) {
+        if (medecinDAO.trouverParUsername(medecin.getUsername()).isPresent()) {
             throw new RuntimeException("Username déjà utilisé !");
         }
 
@@ -23,7 +23,7 @@ public class MedecinServiceImpl implements MedecinService {
 
     @Override
     public void supprimerMedecin(Long id) {
-        if (medecinDAO.trouverParId(id) == null) {
+        if (!medecinDAO.trouverParId(id).isPresent()) {
             throw new RuntimeException("Médecin inexistant !");
         }
         medecinDAO.supprimer(id);
@@ -31,12 +31,12 @@ public class MedecinServiceImpl implements MedecinService {
 
     @Override
     public Medecin trouverParId(Long id) {
-        return medecinDAO.trouverParId(id);
+        return medecinDAO.trouverParId(id).orElse(null);
     }
 
     @Override
     public Medecin trouverParUsername(String username) {
-        return medecinDAO.trouverParUsername(username);
+        return medecinDAO.trouverParUsername(username).orElse(null);
     }
 
     @Override
