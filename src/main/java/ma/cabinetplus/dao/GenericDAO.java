@@ -1,10 +1,11 @@
 package ma.cabinetplus.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface GenericDAO<T, ID> {
     void ajouter(T entity);
     void supprimer(ID id);
-    T trouverParId(ID id);
+    Optional<T> trouverParId(ID id);
     List<T> trouverTous();
 }

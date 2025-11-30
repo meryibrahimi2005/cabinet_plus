@@ -2,28 +2,31 @@ package ma.cabinetplus.dao;
 
 import ma.cabinetplus.model.Consultation;
 import ma.cabinetplus.model.Patient;
-
+import ma.cabinetplus.exception.DataAccessException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ConsultationDAOImpl implements ConsultationDAO {
 
     @Override
-    public void ajouter(Consultation c) {
-        String sql = "INSERT INTO consultation (patient_id, numero_dossier, date, prix, note) VALUES (?, ?, ?, ?, ?)";
+    public void ajouter(Consultation consultation) {
+        String sql = "INSERT INTO consultation (patient_id, numero_dossier, date_consultation, " +
+                     "prix, note) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, Math.toIntExact(c.getPatient().getId()));
-            stmt.setString(2, c.getNumeroDossier());
-            stmt.setDate(3, Date.valueOf(c.getDate()));
-            stmt.setDouble(4, c.getPrix());
-            stmt.setString(5, c.getNote());
+            stmt.setLong(1, consultation.getPatient().getId());
+            stmt.setString(2, consultation.getNumeroDossier());
+            stmt.setDate(3, Date.valueOf(consultation.getDate()));
+            stmt.setDouble(4, consultation.getPrix());
+            stmt.setString(5, consultation.getNote());
 
             stmt.executeUpdate();
+
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DataAccessException("Failed to add consultation: " + e.getMessage(), e);
         }
     }
 
@@ -32,80 +35,86 @@ public class ConsultationDAOImpl implements ConsultationDAO {
         String sql = "DELETE FROM consultation WHERE id=?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-
             stmt.setLong(1, id);
             stmt.executeUpdate();
-
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DataAccessException("Failed to delete consultation: " + e.getMessage(), e);
         }
     }
 
-
     @Override
-    public List<Consultation> trouverParPatient(Long patientId) {
-        List<Consultation> list = new ArrayList<>();
-        String sql = "SELECT * FROM consultation WHERE patient_id=?";
+    public Optional<Consultation> trouverParId(Long id) {
+        String sql = "SELECT id, patient_id, numero_dossier, date_consultation, prix, note " +
+                     "FROM consultation WHERE id = ?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setLong(1, patientId);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                list.add(mapConsultation(rs));
+            stmt.setLong(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return Optional.of(mapConsultation(rs));
+                }
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DataAccessException("Failed to find consultation: " + e.getMessage(), e);
         }
-        return list;
+        return Optional.empty();
     }
 
     @Override
     public List<Consultation> trouverTous() {
-        List<Consultation> list = new ArrayList<>();
-        String sql = "SELECT * FROM consultation";
+        List<Consultation> consultations = new ArrayList<>();
+        String sql = "SELECT id, patient_id, numero_dossier, date_consultation, prix, note " +
+                     "FROM consultation";
         try (Connection conn = DatabaseConnection.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
-                list.add(mapConsultation(rs));
+                consultations.add(mapConsultation(rs));
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DataAccessException("Failed to retrieve consultations: " + e.getMessage(), e);
         }
-        return list;
+        return consultations;
     }
 
     @Override
-    public Consultation trouverParId(Long id) {
-        String sql = "SELECT * FROM consultation WHERE id=?";
+    public List<Consultation> trouverParPatient(Long patientId) {
+        List<Consultation> consultations = new ArrayList<>();
+        String sql = "SELECT id, patient_id, numero_dossier, date_consultation, prix, note " +
+                     "FROM consultation WHERE patient_id = ?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setLong(1, id);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                return mapConsultation(rs);
+            stmt.setLong(1, patientId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    consultations.add(mapConsultation(rs));
+                }
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DataAccessException("Failed to find consultations for patient: " + e.getMessage(), e);
         }
-        return null;
+        return consultations;
     }
 
     private Consultation mapConsultation(ResultSet rs) throws SQLException {
         Long patientId = rs.getLong("patient_id");
-        Patient patient = new PatientDAOImpl().trouverParId(patientId);
+        Optional<Patient> patient = new PatientDAOImpl().trouverParId(patientId);
+        
+        if (patient.isEmpty()) {
+            throw new DataAccessException("Patient not found for consultation with ID: " + patientId);
+        }
 
         return new Consultation(
                 rs.getLong("id"),
-                patient,
+                patient.get(),
                 rs.getString("numero_dossier"),
-                rs.getDate("date").toLocalDate(),
+                rs.getDate("date_consultation").toLocalDate(),
                 rs.getDouble("prix"),
                 rs.getString("note")
         );

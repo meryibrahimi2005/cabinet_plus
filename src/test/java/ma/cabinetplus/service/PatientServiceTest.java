@@ -9,6 +9,7 @@ import org.mockito.*;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -39,8 +40,8 @@ class PatientServiceTest {
 
     @Test
     void testTrouverParId() {
-        when(patientDAO.trouverParId(1)).thenReturn(patient);
-        Patient result = patientService.trouverParId(1);
+        when(patientDAO.trouverParId(1L)).thenReturn(Optional.of(patient));
+        Patient result = patientService.trouverParId(1L);
         assertNotNull(result);
         assertEquals("Jane", result.getPrenom());
     }

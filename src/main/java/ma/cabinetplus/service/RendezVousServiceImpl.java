@@ -17,11 +17,11 @@ public class RendezVousServiceImpl implements RendezVousService {
     @Override
     public void ajouterRendezVous(RendezVous rdv) {
 
-        if (patientDAO.trouverParId(rdv.getPatient().getId()) == null)
-            throw new RuntimeException("Patient introuvable !");     // verifier si patient existe deja
+        if (!patientDAO.trouverParId(rdv.getPatient().getId()).isPresent())
+            throw new RuntimeException("Patient introuvable !");
 
         if (rdv.getDate().isBefore(LocalDate.now()))
-            throw new RuntimeException("Impossible d’ajouter un RDV dans le passé !");   // date rendez vous dans passe
+            throw new RuntimeException("Impossible d'ajouter un RDV dans le passé !");
 
         // vérifier si le patient a un rdv au même moment
         List<RendezVous> existants = rdvDAO.trouverParPatient(rdv.getPatient().getId());
@@ -36,7 +36,7 @@ public class RendezVousServiceImpl implements RendezVousService {
 
     @Override
     public void changerStatut(Long id, StatutRendezVous statut) {
-        RendezVous r = rdvDAO.trouverParId(id);
+        RendezVous r = rdvDAO.trouverParId(id).orElse(null);
 
         if (r == null)
             throw new RuntimeException("RDV introuvable !");
@@ -48,7 +48,7 @@ public class RendezVousServiceImpl implements RendezVousService {
 
     @Override
     public RendezVous trouverParId(Long id) {
-        return rdvDAO.trouverParId(id);
+        return rdvDAO.trouverParId(id).orElse(null);
     }
 
     @Override

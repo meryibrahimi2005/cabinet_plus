@@ -12,6 +12,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -19,27 +20,27 @@ import static org.mockito.Mockito.*;
 class ConsultationServiceTest {
 
     @Mock
-    private ConsultationDAO consultationDAO; // mock de la DAO
+    private ConsultationDAO consultationDAO;
 
     @Mock
-    private PatientDAO patientDAO; // mock de la DAO patient
+    private PatientDAO patientDAO;
 
     @InjectMocks
-    private ConsultationServiceImpl service; // service testé
+    private ConsultationServiceImpl service;
 
     private Patient patient;
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this); // initialise les mocks
+        MockitoAnnotations.openMocks(this);
 
-        // Création d’un patient test
         patient = new Patient(
                 "Dupont", "Jean", "jdupont", "pass123",
                 LocalDate.of(1990, 1, 1),
                 "0600000000", "jdupont@mail.com",
                 "Paris", "D001"
         );
+        patient.setId(1L);
     }
 
     @Test
@@ -49,7 +50,7 @@ class ConsultationServiceTest {
                 LocalDate.now().minusDays(1), 50.0, "Note"
         );
 
-        when(patientDAO.trouverParId(patient.getId())).thenReturn(patient);
+        when(patientDAO.trouverParId(patient.getId())).thenReturn(Optional.of(patient));
 
         assertDoesNotThrow(() -> service.ajouterConsultation(consultation));
 
@@ -63,7 +64,7 @@ class ConsultationServiceTest {
                 LocalDate.now().minusDays(1), 50.0, "Note"
         );
 
-        when(patientDAO.trouverParId(patient.getId())).thenReturn(null);
+        when(patientDAO.trouverParId(patient.getId())).thenReturn(Optional.empty());
 
         RuntimeException exception = assertThrows(RuntimeException.class, () ->
                 service.ajouterConsultation(consultation)
@@ -80,7 +81,7 @@ class ConsultationServiceTest {
                 LocalDate.now().minusDays(1), -10.0, "Note"
         );
 
-        when(patientDAO.trouverParId(patient.getId())).thenReturn(patient);
+        when(patientDAO.trouverParId(patient.getId())).thenReturn(Optional.of(patient));
 
         RuntimeException exception = assertThrows(RuntimeException.class, () ->
                 service.ajouterConsultation(consultation)
@@ -97,7 +98,7 @@ class ConsultationServiceTest {
                 LocalDate.now().plusDays(5), 50.0, "Note"
         );
 
-        when(patientDAO.trouverParId(patient.getId())).thenReturn(patient);
+        when(patientDAO.trouverParId(patient.getId())).thenReturn(Optional.of(patient));
 
         RuntimeException exception = assertThrows(RuntimeException.class, () ->
                 service.ajouterConsultation(consultation)
@@ -114,7 +115,7 @@ class ConsultationServiceTest {
                 LocalDate.now(), 50.0, "Note"
         );
 
-        when(consultationDAO.trouverParId(1L)).thenReturn(consultation);
+        when(consultationDAO.trouverParId(1L)).thenReturn(Optional.of(consultation));
 
         Consultation result = service.trouverParId(1L);
         assertEquals(consultation, result);
