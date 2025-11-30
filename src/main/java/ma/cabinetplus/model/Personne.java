@@ -1,7 +1,7 @@
 package ma.cabinetplus.model;
 import ma.cabinetplus.model.Role;
 
-public class Personne {
+public abstract class Personne {
 
     protected String nom;
     protected String prenom;
@@ -37,5 +37,25 @@ public class Personne {
 
     public Role getRole() {
         return role;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }
