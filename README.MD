@@ -1,8 +1,13 @@
 pour executer base de donne sur docker :
+**Docker Commands**:
+```bash
+# Start PostgreSQL from src/docker/
+cd src/docker && docker-compose up -d
 
-cd docker   
+# Access database
+docker exec -it cabinet_postgress psql -U cabinet -d cabinet_db
 
-docker-compose up -d 
+
 
 pour cree une image dans docker posgress.yaml 
 
@@ -60,3 +65,5 @@ login : medecin
 pass : 1234
 
 pour connecter la base : docker exec -it cabinet_postgress psql -U cabinet -d cabinet_db
+pour cree utilisatuer par default : 
+docker exec -it cabinet_postgress psql -U cabinet -d cabinet_db -c "INSERT INTO medecin (nom, prenom, username, password) VALUES ('Médecin', 'Test', 'medecin', '1234');"
