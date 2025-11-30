@@ -19,7 +19,7 @@ public class RendezVousDAOImpl implements RendezVousDAO {
             stmt.setDate(1, Date.valueOf(rdv.getDate()));
             stmt.setString(2, rdv.getHeure());
             stmt.setString(3, rdv.getMotif());
-            stmt.setInt(4, getPatientId(rdv.getPatient().getNumeroDossier()));
+            stmt.setLong(4, getPatientId(rdv.getPatient().getNumeroDossier()));
             stmt.setString(5, rdv.getStatut().name());
 
             stmt.executeUpdate();
@@ -44,7 +44,7 @@ public class RendezVousDAOImpl implements RendezVousDAO {
     }
 
 
-    private int getPatientId(String numeroDossier) throws SQLException {
+    private Long getPatientId(String numeroDossier) throws SQLException {
         String sql = "SELECT id FROM patient WHERE numero_dossier=?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -52,10 +52,10 @@ public class RendezVousDAOImpl implements RendezVousDAO {
             stmt.setString(1, numeroDossier);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                return rs.getInt("id");
+                return rs.getLong("id");
             }
         }
-        return -1;
+        return -1L;
     }
 
     @Override
@@ -74,13 +74,13 @@ public class RendezVousDAOImpl implements RendezVousDAO {
     }
 
     @Override
-    public List<RendezVous> trouverParPatient(int patientId) {
+    public List<RendezVous> trouverParPatient(Long patientId) {
         List<RendezVous> list = new ArrayList<>();
         String sql = "SELECT * FROM rendezvous WHERE patient_id=?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, patientId);
+            stmt.setLong(1, patientId);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 list.add(mapRdv(rs));
@@ -129,7 +129,7 @@ public class RendezVousDAOImpl implements RendezVousDAO {
     }
 
     private RendezVous mapRdv(ResultSet rs) throws SQLException {
-        int patientId = rs.getInt("patient_id");
+        Long patientId = rs.getLong("patient_id");
         Patient patient = new PatientDAOImpl().trouverParId(patientId);
 
         return new RendezVous(

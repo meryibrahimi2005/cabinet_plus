@@ -22,7 +22,7 @@ public class MedecinServiceImpl implements MedecinService {
     }
 
     @Override
-    public void supprimerMedecin(int id) {
+    public void supprimerMedecin(Long id) {
         if (medecinDAO.trouverParId(id) == null) {
             throw new RuntimeException("Médecin inexistant !");
         }
@@ -30,7 +30,7 @@ public class MedecinServiceImpl implements MedecinService {
     }
 
     @Override
-    public Medecin trouverParId(int id) {
+    public Medecin trouverParId(Long id) {
         return medecinDAO.trouverParId(id);
     }
 

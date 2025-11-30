@@ -5,8 +5,8 @@ import java.util.List;
 
 public interface MedecinService {
     void ajouterMedecin(Medecin medecin);
-    void supprimerMedecin(int id);
-    Medecin trouverParId(int id);
+    void supprimerMedecin(Long id);
+    Medecin trouverParId(Long id);
     Medecin trouverParUsername(String username);
     List<Medecin> trouverTous();
 }

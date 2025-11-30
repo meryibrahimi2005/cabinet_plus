@@ -28,14 +28,14 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public void supprimerPatient(int id) {
+    public void supprimerPatient(Long id) {
         if (patientDAO.trouverParId(id) == null)
             throw new RuntimeException("Patient introuvable");
         patientDAO.supprimer(id);
     }
 
     @Override
-    public Patient trouverParId(int id) {
+    public Patient trouverParId(Long id) {
         return patientDAO.trouverParId(id);
     }
 

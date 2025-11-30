@@ -35,7 +35,7 @@ public class ConsultationServiceImpl implements ConsultationService {
     }
 
     @Override
-    public List<Consultation> trouverParPatient(int id) {
+    public List<Consultation> trouverParPatient(Long id) {
         return consultationDAO.trouverParPatient(id);
     }
 

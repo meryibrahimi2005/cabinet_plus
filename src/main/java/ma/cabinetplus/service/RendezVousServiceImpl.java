@@ -52,7 +52,7 @@ public class RendezVousServiceImpl implements RendezVousService {
     }
 
     @Override
-    public List<RendezVous> trouverParPatient(int id) {
+    public List<RendezVous> trouverParPatient(Long id) {
         return rdvDAO.trouverParPatient(id);
     }
 
