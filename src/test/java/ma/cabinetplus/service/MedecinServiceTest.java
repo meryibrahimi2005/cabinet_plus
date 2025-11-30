@@ -19,7 +19,7 @@ class MedecinServiceTest {
 
     @Test
     void testAjouterMedecinEtTrouverParUsername() {
-        Medecin med = new Medecin(0, "Ali", "Khalid", "akhalid", "pass123");
+        Medecin med = new Medecin(0L, "Ali", "Khalid", "akhalid", "pass123");
         medecinService.ajouterMedecin(med);
 
         Medecin trouvé = medecinService.trouverParUsername("akhalid");
@@ -30,10 +30,10 @@ class MedecinServiceTest {
 
     @Test
     void testAjouterMedecinUsernameExist() {
-        Medecin med1 = new Medecin(0, "Test", "User", "dup", "pass");
+        Medecin med1 = new Medecin(0L, "Test", "User", "dup", "pass");
         medecinService.ajouterMedecin(med1);
 
-        Medecin med2 = new Medecin(0, "Test2", "User2", "dup", "pass2");
+        Medecin med2 = new Medecin(0L, "Test2", "User2", "dup", "pass2");
         RuntimeException exception = assertThrows(RuntimeException.class,
                 () -> medecinService.ajouterMedecin(med2));
         assertEquals("Username déjà utilisé !", exception.getMessage());
@@ -48,7 +48,7 @@ class MedecinServiceTest {
     @Test
     void testSupprimerMedecinInexistant() {
         RuntimeException exception = assertThrows(RuntimeException.class,
-                () -> medecinService.supprimerMedecin(-1));
+                () -> medecinService.supprimerMedecin(-1L));
         assertEquals("Médecin inexistant !", exception.getMessage());
     }
 }

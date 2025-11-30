@@ -39,8 +39,9 @@ class RendezVousServiceTest {
                 "Martin", "Claire", "cmartin", "pass123",
                 LocalDate.of(1992, 5, 10),
                 "0601020304", "claire@mail.com",
-                "Lyon", "P001"
+                "Marseille", "DOS-2"
         );
+        patient.setId(2L);
     }
 
     @Test

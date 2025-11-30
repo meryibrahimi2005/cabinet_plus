@@ -17,7 +17,7 @@ public class ConsultationServiceImpl implements ConsultationService {
     @Override
     public void ajouterConsultation(Consultation c) {
 
-        if (patientDAO.trouverParId(c.getPatient().getId()) == null)
+        if (!patientDAO.trouverParId(c.getPatient().getId()).isPresent())
             throw new RuntimeException("Patient introuvable !");
 
         if (c.getPrix() < 0)
@@ -31,7 +31,7 @@ public class ConsultationServiceImpl implements ConsultationService {
 
     @Override
     public Consultation trouverParId(Long id) {
-        return consultationDAO.trouverParId(id);
+        return consultationDAO.trouverParId(id).orElse(null);
     }
 
     @Override
