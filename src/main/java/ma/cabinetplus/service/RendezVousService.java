@@ -9,6 +9,6 @@ public interface RendezVousService {
     void ajouterRendezVous(RendezVous rdv);
     void changerStatut(Long id, StatutRendezVous statut);
     RendezVous trouverParId(Long id);
-    List<RendezVous> trouverParPatient(int id);
+    List<RendezVous> trouverParPatient(Long id);
     List<RendezVous> trouverTous();
 }

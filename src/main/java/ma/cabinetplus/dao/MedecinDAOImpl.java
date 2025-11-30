@@ -28,13 +28,13 @@ public class MedecinDAOImpl implements MedecinDAO {
     }
 
     @Override
-    public void supprimer(Integer id) {
+    public void supprimer(Long id) {
         String sql = "DELETE FROM medecin WHERE id = ?";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, id);
+            stmt.setLong(1, id);
             stmt.executeUpdate();
 
         } catch (SQLException e) {
@@ -43,20 +43,20 @@ public class MedecinDAOImpl implements MedecinDAO {
     }
 
     @Override
-    public Medecin trouverParId(Integer id) {
+    public Medecin trouverParId(Long id) {
         String sql = "SELECT * FROM medecin WHERE id = ?";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, id);
+            stmt.setLong(1, id);
 
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
                 // IMPORTANT : ton constructeur prend EXACTEMENT ces 5 paramètres !
                 Medecin m = new Medecin(
-                        rs.getInt("id"),
+                        (long)rs.getInt("id"),
                         rs.getString("nom"),
                         rs.getString("prenom"),
                         rs.getString("username"),
@@ -64,7 +64,7 @@ public class MedecinDAOImpl implements MedecinDAO {
                 );
 
                 // L'id n'est pas stocké dans le constructeur → on doit le remettre :
-                m.setId(rs.getInt("id"));
+                m.setId((long)rs.getInt("id"));
 
                 return m;
             }
@@ -88,13 +88,13 @@ public class MedecinDAOImpl implements MedecinDAO {
 
             if (rs.next()) {
                 Medecin m = new Medecin(
-                        rs.getInt("id"),
+                        (long)rs.getInt("id"),
                         rs.getString("nom"),
                         rs.getString("prenom"),
                         rs.getString("username"),
                         rs.getString("password")
                 );
-                m.setId(rs.getInt("id"));
+                m.setId((long)rs.getInt("id"));
                 return m;
             }
 
@@ -117,14 +117,14 @@ public class MedecinDAOImpl implements MedecinDAO {
             while (rs.next()) {
 
                 Medecin m = new Medecin(
-                        rs.getInt("id"),
+                        (long)rs.getInt("id"),
                         rs.getString("nom"),
                         rs.getString("prenom"),
                         rs.getString("username"),
                         rs.getString("password")
                 );
 
-                m.setId(rs.getInt("id"));
+                m.setId((long)rs.getInt("id"));
 
                 medecins.add(m);
             }

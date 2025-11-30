@@ -31,11 +31,11 @@ public class PatientDAOImpl implements PatientDAO {
     }
 
     @Override
-    public void supprimer(Integer id) {
+    public void supprimer(Long id) {
         String sql = "DELETE FROM patient WHERE id=?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, id);
+            stmt.setLong(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -43,12 +43,12 @@ public class PatientDAOImpl implements PatientDAO {
     }
 
     @Override
-    public Patient trouverParId(Integer id) {
+    public Patient trouverParId(Long id) {
         String sql = "SELECT * FROM patient WHERE id=?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, id);
+            stmt.setLong(1, id);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 return mapPatient(rs);

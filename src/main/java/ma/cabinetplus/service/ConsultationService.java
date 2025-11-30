@@ -6,7 +6,7 @@ import java.util.List;
 public interface ConsultationService {
     void ajouterConsultation(Consultation c);
     Consultation trouverParId(Long id);
-    List<Consultation> trouverParPatient(int id);
+    List<Consultation> trouverParPatient(Long id);
     List<Consultation> trouverTous();
     void supprimer(Long id);
 }

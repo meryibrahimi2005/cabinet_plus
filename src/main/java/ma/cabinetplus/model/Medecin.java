@@ -1,17 +1,17 @@
 package ma.cabinetplus.model;
 
 public class Medecin extends Personne {
-    private int id;
-    public Medecin(int id ,String nom, String prenom,
+    private Long id;
+    public Medecin(Long id ,String nom, String prenom,
                    String username, String password) {
         super(nom, prenom, username, password, Role.MEDECIN);
         this.id=id;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
-    public void setId(int id ){
+    public void setId(Long id ){
         this.id=id;
     }
 

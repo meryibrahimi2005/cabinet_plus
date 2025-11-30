@@ -15,7 +15,7 @@ public class ConsultationDAOImpl implements ConsultationDAO {
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, c.getPatient().getId());
+            stmt.setInt(1, Math.toIntExact(c.getPatient().getId()));
             stmt.setString(2, c.getNumeroDossier());
             stmt.setDate(3, Date.valueOf(c.getDate()));
             stmt.setDouble(4, c.getPrix());
@@ -43,13 +43,13 @@ public class ConsultationDAOImpl implements ConsultationDAO {
 
 
     @Override
-    public List<Consultation> trouverParPatient(int patientId) {
+    public List<Consultation> trouverParPatient(Long patientId) {
         List<Consultation> list = new ArrayList<>();
         String sql = "SELECT * FROM consultation WHERE patient_id=?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, patientId);
+            stmt.setLong(1, patientId);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 list.add(mapConsultation(rs));
@@ -98,7 +98,7 @@ public class ConsultationDAOImpl implements ConsultationDAO {
     }
 
     private Consultation mapConsultation(ResultSet rs) throws SQLException {
-        int patientId = rs.getInt("patient_id");
+        Long patientId = rs.getLong("patient_id");
         Patient patient = new PatientDAOImpl().trouverParId(patientId);
 
         return new Consultation(
