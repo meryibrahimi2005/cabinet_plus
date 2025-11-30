@@ -46,6 +46,26 @@ public class Patient extends Personne {
         return email;
     }
 
+    public void setDateNaissance(LocalDate dateNaissance) {
+        this.dateNaissance = dateNaissance;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setAdresse(String adresse) {
+        this.adresse = adresse;
+    }
+
+    public void setNumeroDossier(String numeroDossier) {
+        this.numeroDossier = numeroDossier;
+    }
+
     @Override
     public String toString() {
         return "Patient { " +
