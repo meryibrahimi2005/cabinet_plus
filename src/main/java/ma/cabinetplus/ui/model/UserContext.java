@@ -33,6 +33,7 @@ public class UserContext {
         return role;
     }
 
+    //deconnecter user
     public void logout() {
         this.currentUser = null;
         this.role = null;
