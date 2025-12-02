@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  cabinetplus:
+    build: .
+    container_name: cabinetplus_app
+    environment:
+      - DISPLAY=${DISPLAY}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    stdin_open: true
+    tty: true
