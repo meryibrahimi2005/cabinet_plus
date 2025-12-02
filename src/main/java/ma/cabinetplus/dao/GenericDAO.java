@@ -8,4 +8,5 @@ public interface GenericDAO<T, ID> {
     void supprimer(ID id);
     Optional<T> trouverParId(ID id);
     List<T> trouverTous();
+    void mettreAJour(T entity);
 }

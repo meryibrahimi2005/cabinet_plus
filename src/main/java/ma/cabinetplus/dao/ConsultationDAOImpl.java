@@ -119,4 +119,21 @@ public class ConsultationDAOImpl implements ConsultationDAO {
                 rs.getString("note")
         );
     }
+
+    @Override
+    public void mettreAJour(Consultation consultation) {
+        String sql = "UPDATE consultation SET prix=?, note=? WHERE id=?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setDouble(1, consultation.getPrix());
+            stmt.setString(2, consultation.getNote());
+            stmt.setLong(3, consultation.getId());
+
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new DataAccessException("Failed to update consultation: " + e.getMessage(), e);
+        }
+    }
 }

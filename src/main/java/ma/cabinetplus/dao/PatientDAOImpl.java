@@ -138,4 +138,29 @@ public class PatientDAOImpl implements PatientDAO {
         p.setId(rs.getLong("id"));
         return p;
     }
+
+    @Override
+    public void mettreAJour(Patient patient) {
+        String sql = "UPDATE patient SET nom=?, prenom=?, username=?, password=?, " +
+                     "date_naissance=?, telephone=?, email=?, adresse=?, numero_dossier=? WHERE id=?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, patient.getNom());
+            stmt.setString(2, patient.getPrenom());
+            stmt.setString(3, patient.getUsername());
+            stmt.setString(4, patient.getPassword());
+            stmt.setDate(5, Date.valueOf(patient.getDateNaissance()));
+            stmt.setString(6, patient.getTelephone());
+            stmt.setString(7, patient.getEmail());
+            stmt.setString(8, patient.getAdresse());
+            stmt.setString(9, patient.getNumeroDossier());
+            stmt.setLong(10, patient.getId());
+
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new DataAccessException("Failed to update patient: " + e.getMessage(), e);
+        }
+    }
 }

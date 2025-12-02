@@ -105,4 +105,23 @@ public class MedecinDAOImpl implements MedecinDAO {
         );
         return m;
     }
+
+    @Override
+    public void mettreAJour(Medecin medecin) {
+        String sql = "UPDATE medecin SET nom=?, prenom=?, username=?, password=? WHERE id=?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, medecin.getNom());
+            stmt.setString(2, medecin.getPrenom());
+            stmt.setString(3, medecin.getUsername());
+            stmt.setString(4, medecin.getPassword());
+            stmt.setLong(5, medecin.getId());
+
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new DataAccessException("Failed to update medecin: " + e.getMessage(), e);
+        }
+    }
 }
