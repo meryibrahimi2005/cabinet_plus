@@ -102,7 +102,7 @@ public class ConsultationDAOImpl implements ConsultationDAO {
         return consultations;
     }
 
-    private Consultation mapConsultation(ResultSet rs) throws SQLException {
+    Consultation mapConsultation(ResultSet rs) throws SQLException {
         Long patientId = rs.getLong("patient_id");
         Optional<Patient> patient = new PatientDAOImpl().trouverParId(patientId);
         

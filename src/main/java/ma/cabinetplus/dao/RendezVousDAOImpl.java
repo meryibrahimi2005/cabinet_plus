@@ -115,7 +115,7 @@ public class RendezVousDAOImpl implements RendezVousDAO {
         return rendezVousList;
     }
 
-    private RendezVous mapRendezVous(ResultSet rs) throws SQLException {
+    RendezVous mapRendezVous(ResultSet rs) throws SQLException {
         Long patientId = rs.getLong("patient_id");
         Optional<Patient> patient = new PatientDAOImpl().trouverParId(patientId);
         

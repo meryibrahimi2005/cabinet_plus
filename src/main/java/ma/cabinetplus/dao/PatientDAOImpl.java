@@ -123,7 +123,7 @@ public class PatientDAOImpl implements PatientDAO {
         return Optional.empty();
     }
 
-    private Patient mapPatient(ResultSet rs) throws SQLException {
+    Patient mapPatient(ResultSet rs) throws SQLException {
         Patient p = new Patient(
                 rs.getString("nom"),
                 rs.getString("prenom"),
