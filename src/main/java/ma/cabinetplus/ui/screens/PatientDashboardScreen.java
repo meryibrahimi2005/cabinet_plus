@@ -13,6 +13,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import ma.cabinetplus.model.Patient;
+import ma.cabinetplus.service.RendezVousServiceImpl;
 import ma.cabinetplus.ui.model.UserContext;
 
 /**
@@ -83,12 +84,17 @@ public class PatientDashboardScreen {
                 "-fx-background-color: #3498db; -fx-text-fill: white;");
         editButton.setOnAction(e -> openEditProfile(patient));
 
-        Button viewConsultationsButton = new Button("Mes Consultations");
-        viewConsultationsButton.setStyle("-fx-font-size: 14; -fx-padding: 10 30 10 30; " +
-                "-fx-background-color: #95a5a6; -fx-text-fill: white;");
-        viewConsultationsButton.setOnAction(e -> showAlert("Consultations - Fonctionnalité à venir"));
+        Button bookAppointmentButton = new Button("📅 Prendre un RDV");
+        bookAppointmentButton.setStyle("-fx-font-size: 14; -fx-padding: 10 30 10 30; " +
+                "-fx-background-color: #27ae60; -fx-text-fill: white;");
+        bookAppointmentButton.setOnAction(e -> bookAppointment(patient));
 
-        buttonBox.getChildren().addAll(editButton, viewConsultationsButton);
+        Button viewConsultationsButton = new Button("📋 Mes Consultations");
+        viewConsultationsButton.setStyle("-fx-font-size: 14; -fx-padding: 10 30 10 30; " +
+                "-fx-background-color: #9b59b6; -fx-text-fill: white;");
+        viewConsultationsButton.setOnAction(e -> viewConsultationHistory(patient));
+
+        buttonBox.getChildren().addAll(editButton, bookAppointmentButton, viewConsultationsButton);
 
         mainContent.getChildren().addAll(welcome, new Text(" "), infoGrid, buttonBox);
         return mainContent;
@@ -129,6 +135,13 @@ public class PatientDashboardScreen {
         editDialog.showAndWait();
     }
 
+    private void bookAppointment(Patient patient) {
+        BookAppointmentScreen bookScreen = new BookAppointmentScreen(stage, patient, new RendezVousServiceImpl(), () -> {
+            showAlert("Rendez-vous réservé avec succès!");
+        });
+        bookScreen.showAndWait();
+    }
+
     private void showAlert(String message) {
         javafx.scene.control.Alert alert = new javafx.scene.control.Alert(
                 javafx.scene.control.Alert.AlertType.INFORMATION
@@ -143,5 +156,10 @@ public class PatientDashboardScreen {
         UserContext.getInstance().logout();
         RoleSelectionScreen roleScreen = new RoleSelectionScreen(stage);
         roleScreen.show();
+    }
+
+    private void viewConsultationHistory(Patient patient) {
+        PatientConsultationHistoryScreen historyScreen = new PatientConsultationHistoryScreen(stage, patient);
+        historyScreen.show();
     }
 }

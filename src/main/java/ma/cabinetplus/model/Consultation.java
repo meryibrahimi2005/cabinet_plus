@@ -44,6 +44,15 @@ public class Consultation {
     public String getNote() {
         return note;
     }
+
+    public void setPrix(double prix) {
+        this.prix = prix;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
     public StatutRendezVous getStatut() {
         return statut;
     }

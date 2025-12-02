@@ -1,21 +1,19 @@
 package ma.cabinetplus.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class RendezVous {
 
     private Long id;
-    private LocalDate date;
-    private String heure;          // ex : "14:30"
+    private LocalDateTime dateHeureRendezVous;
     private String motif;
     private Patient patient;
     private StatutRendezVous statut;
 
-    public RendezVous(Long id, LocalDate date, String heure,
-                      String motif, Patient patient, StatutRendezVous statut) {
+    public RendezVous(Long id, LocalDateTime dateHeureRendezVous, String motif,
+                      Patient patient, StatutRendezVous statut) {
         this.id = id;
-        this.date = date;
-        this.heure = heure;
+        this.dateHeureRendezVous = dateHeureRendezVous;
         this.motif = motif;
         this.patient = patient;
         this.statut = statut;
@@ -25,12 +23,8 @@ public class RendezVous {
         return id;
     }
 
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public String getHeure() {
-        return heure;
+    public LocalDateTime getDateHeureRendezVous() {
+        return dateHeureRendezVous;
     }
 
     public String getMotif() {
@@ -53,8 +47,7 @@ public class RendezVous {
     public String toString() {
         return "RendezVous{" +
                 "id=" + id +
-                ", date=" + date +
-                ", heure='" + heure + '\'' +
+                ", dateHeureRendezVous=" + dateHeureRendezVous +
                 ", motif='" + motif + '\'' +
                 ", patient=" + patient.getNom() + " " + patient.getPrenom() +
                 ", statut=" + statut +

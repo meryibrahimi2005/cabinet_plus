@@ -190,7 +190,7 @@ public class AuthenticationScreen {
     }
 
     private void openMedecinDashboard() {
-        PatientManagementScreen dashboard = new PatientManagementScreen(stage);
+        AppointmentManagementScreen dashboard = new AppointmentManagementScreen(stage);
         dashboard.show();
     }
 

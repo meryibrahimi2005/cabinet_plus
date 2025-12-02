@@ -19,9 +19,7 @@ import ma.cabinetplus.service.PatientServiceImpl;
 import ma.cabinetplus.model.Patient;
 import java.time.LocalDate;
 
-/**
- * Dialog pour ajouter ou modifier un patient
- */
+
 public class AddEditPatientDialog {
 
     private Stage dialogStage;
@@ -70,7 +68,6 @@ public class AddEditPatientDialog {
         Scene scene = new Scene(root, 500, 600);
         dialogStage.setScene(scene);
 
-        // Store references to form fields for save action
         TextField nomField = (TextField) form.lookup("#nomField");
         TextField prenomField = (TextField) form.lookup("#prenomField");
         TextField usernameField = (TextField) form.lookup("#usernameField");
