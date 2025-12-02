@@ -48,4 +48,15 @@ public class ConsultationServiceImpl implements ConsultationService {
     public void supprimer(Long id) {
         consultationDAO.supprimer(id);
     }
+
+    @Override
+    public void mettreAJourConsultation(Consultation c) {
+        if (!patientDAO.trouverParId(c.getPatient().getId()).isPresent())
+            throw new RuntimeException("Patient introuvable !");
+
+        if (c.getPrix() < 0)
+            throw new RuntimeException("Le prix de la consultation doit être positif !");
+
+        consultationDAO.mettreAJour(c);
+    }
 }

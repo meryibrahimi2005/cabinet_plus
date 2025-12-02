@@ -4,9 +4,8 @@ import ma.cabinetplus.dao.RendezVousDAO;
 import ma.cabinetplus.dao.RendezVousDAOImpl;
 import ma.cabinetplus.model.RendezVous;
 import ma.cabinetplus.model.StatutRendezVous;
-import ma.cabinetplus.service.RendezVousService;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class RendezVousServiceImpl implements RendezVousService {
@@ -20,13 +19,13 @@ public class RendezVousServiceImpl implements RendezVousService {
         if (!patientDAO.trouverParId(rdv.getPatient().getId()).isPresent())
             throw new RuntimeException("Patient introuvable !");
 
-        if (rdv.getDate().isBefore(LocalDate.now()))
+        if (rdv.getDateHeureRendezVous().isBefore(LocalDateTime.now()))
             throw new RuntimeException("Impossible d'ajouter un RDV dans le passé !");
 
         // vérifier si le patient a un rdv au même moment
         List<RendezVous> existants = rdvDAO.trouverParPatient(rdv.getPatient().getId());
         for (RendezVous r : existants) {
-            if (r.getDate().equals(rdv.getDate()) && r.getHeure().equals(rdv.getHeure())) {
+            if (r.getDateHeureRendezVous().equals(rdv.getDateHeureRendezVous())) {
                 throw new RuntimeException("Le patient a déjà un rdv à la même heure !");
             }
         }

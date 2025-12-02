@@ -9,4 +9,5 @@ public interface ConsultationService {
     List<Consultation> trouverParPatient(Long id);
     List<Consultation> trouverTous();
     void supprimer(Long id);
+    void mettreAJourConsultation(Consultation c);
 }
