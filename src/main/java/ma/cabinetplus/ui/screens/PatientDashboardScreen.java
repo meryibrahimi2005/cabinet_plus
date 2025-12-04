@@ -39,7 +39,7 @@ public class PatientDashboardScreen {
         stage.setTitle("Cabinet Plus - Mon Profil");
         stage.show();
     }
-
+    // crée la barre du haut avec le titre et le bouton déconnexion.
     private HBox createTopBar() {
         HBox topBar = new HBox();
         topBar.setStyle("-fx-background-color: #34495e;");
@@ -61,7 +61,10 @@ public class PatientDashboardScreen {
         topBar.getChildren().addAll(title, logoutButton);
         return topBar;
     }
-
+    //crée le contenu principal (infos patient et boutons)
+    // VBox : layout vertical: Text de bienvenue avec prénom + nom du patient
+    //GridPane avec toutes les infos du patient (nom, prénom, téléphone, email…)
+    //HBox avec trois boutons :Modifier le profil , Prendre un rendez-vous ,Voir ses consultations
     private VBox createMainContent() {
         VBox mainContent = new VBox(20);
         mainContent.setPadding(new Insets(40));
