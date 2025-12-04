@@ -62,6 +62,7 @@ public class AuthenticationScreen {
         roleText.setFont(new Font("Arial", 28));
         roleText.setStyle("-fx-fill: #2c3e50;");
 
+
         if (role == UserRole.PATIENT) {
             centerBox.getChildren().add(createPatientAuthUI());
         } else {
@@ -98,6 +99,7 @@ public class AuthenticationScreen {
         Label messageLabel = new Label();
         messageLabel.setStyle("-fx-text-fill: #e74c3c; -fx-font-size: 12;");
 
+        // si user clic  se connecter
         Button loginButton = new Button("Se connecter");
         loginButton.setStyle("-fx-font-size: 14; -fx-padding: 10 50 10 50; " +
                 "-fx-background-color: #3498db; -fx-text-fill: white;");
@@ -105,11 +107,13 @@ public class AuthenticationScreen {
             String username = usernameField.getText().trim();
             String password = passwordField.getText().trim();
 
+        // si user laiss un champ vide
             if (username.isEmpty() || password.isEmpty()) {
                 messageLabel.setText("Veuillez remplir tous les champs");
                 return;
             }
 
+        // //si patient exist -> se connecter (openMedecinDashboard) sion affiche mssg erreur
             try {
                 Medecin medecin = medecinService.trouverParUsername(username);
                 if (medecin != null && medecin.getPassword().equals(password)) {
@@ -123,6 +127,7 @@ public class AuthenticationScreen {
             }
         });
 
+        // affecte tous ces info a box
         box.getChildren().addAll(usernameField, passwordField, loginButton, messageLabel);
         return box;
     }
@@ -144,6 +149,7 @@ public class AuthenticationScreen {
         Label messageLabel = new Label();
         messageLabel.setStyle("-fx-text-fill: #e74c3c; -fx-font-size: 12;");
 
+        // si user clic sur se connecter
         Button loginButton = new Button("Se connecter");
         loginButton.setStyle("-fx-font-size: 14; -fx-padding: 10 50 10 50; " +
                 "-fx-background-color: #27ae60; -fx-text-fill: white;");
@@ -151,11 +157,13 @@ public class AuthenticationScreen {
             String username = usernameField.getText().trim();
             String password = passwordField.getText().trim();
 
+            // si user laisse l un des champ vide
             if (username.isEmpty() || password.isEmpty()) {
                 messageLabel.setText("Veuillez remplir tous les champs");
                 return;
             }
 
+            //si patient exist -> se connecter (openPatientDashboard) sion  affiche mssg erreur
             try {
                 Patient patient = patientService.trouverParUsername(username);
                 if (patient != null && patient.getPassword().equals(password)) {
@@ -169,6 +177,7 @@ public class AuthenticationScreen {
             }
         });
 
+        //si user clic sur cree un compt -> appele fct openPatientSignUp
         Button signUpButton = new Button("Créer un compte");
         signUpButton.setStyle("-fx-font-size: 14; -fx-padding: 10 50 10 50; " +
                 "-fx-background-color: #95a5a6; -fx-text-fill: white;");

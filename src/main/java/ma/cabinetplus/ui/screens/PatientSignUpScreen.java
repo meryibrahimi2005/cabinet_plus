@@ -35,6 +35,7 @@ public class PatientSignUpScreen {
         VBox root = new VBox();
         root.setStyle("-fx-background-color: #f5f5f5;");
 
+        //HBox topBox : barre en haut (contient button retour)
         HBox topBox = new HBox();
         topBox.setStyle("-fx-background-color: #34495e;");
         topBox.setPadding(new Insets(20));
@@ -45,6 +46,7 @@ public class PatientSignUpScreen {
         backButton.setOnAction(e -> goBack());
         topBox.getChildren().add(backButton);
 
+        //VBox centreBox : structure vertcale en centre ( contient titer + formulaire (sous forme d un gridPnane )
         VBox centerBox = new VBox(20);
         centerBox.setAlignment(Pos.TOP_CENTER);
         centerBox.setPadding(new Insets(40));
@@ -54,8 +56,8 @@ public class PatientSignUpScreen {
         title.setFont(new Font("Arial", 24));
         title.setStyle("-fx-fill: #2c3e50;");
 
+        //cree une formulaire
         GridPane form = createSignUpForm();
-
         centerBox.getChildren().addAll(title, form);
 
         root.getChildren().addAll(topBox, centerBox);
@@ -65,6 +67,11 @@ public class PatientSignUpScreen {
         stage.setTitle("Cabinet Plus - Inscription Patient");
         stage.show();
     }
+
+    //methode qui cree une formulaire
+    //  | Label "Nom:"          |  TextField nomField           |
+    //  | (colonne 0 )          |  (colonne 1 )               |
+    //  | (ligne 0  )           |  (ligne 0  )                |
 
     private GridPane createSignUpForm() {
         GridPane grid = new GridPane();
@@ -120,6 +127,7 @@ public class PatientSignUpScreen {
             String email = emailField.getText().trim();
             String adresse = adresseField.getText().trim();
 
+            // si il y a des champs vide
             if (nom.isEmpty() || prenom.isEmpty() || username.isEmpty() ||
                     password.isEmpty() || dateNaissance == null || telephone.isEmpty() ||
                     email.isEmpty() || adresse.isEmpty()) {
@@ -129,15 +137,16 @@ public class PatientSignUpScreen {
             }
 
             try {
-                String numeroDossier = "DOS-" + System.currentTimeMillis();
+                String numeroDossier = "DOS-" + System.currentTimeMillis();   // incremante le nombre dossier automatiquement
                 Patient newPatient = new Patient(nom, prenom, username, password,
                         dateNaissance, telephone, email, adresse, numeroDossier);
 
-                patientService.ajouterPatient(newPatient);
+                patientService.ajouterPatient(newPatient);   // pour gerer la logique metiers
 
                 messageLabel.setText("Compte créé avec succès! Redirection...");
                 messageLabel.setStyle("-fx-text-fill: #27ae60;");
 
+                // Le code attend 2 secondes puis renvoie à la page précédente ( on utilise les threads )
                 javafx.application.Platform.runLater(() -> {
                     try {
                         Thread.sleep(2000);
@@ -153,6 +162,9 @@ public class PatientSignUpScreen {
             }
         });
 
+        // ajouter dans la positionnement dans la grill
+        // syntaxe : grid.add(element, colonne, ligne)
+        // result : Nom: [___________]
         grid.add(new Label("Nom:"), 0, 0);
         grid.add(nomField, 1, 0);
         grid.add(new Label("Prénom:"), 0, 1);

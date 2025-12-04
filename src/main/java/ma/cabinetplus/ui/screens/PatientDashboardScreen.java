@@ -17,7 +17,7 @@ import ma.cabinetplus.service.RendezVousServiceImpl;
 import ma.cabinetplus.ui.model.UserContext;
 
 /**
- * Dashboard pour les patients - affichage des informations personnelles
+ * Écran principal après connexion patient - affichage des informations personnelles
  */
 public class PatientDashboardScreen {
 
