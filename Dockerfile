@@ -1,5 +1,18 @@
+# Utiliser Java 21
 FROM eclipse-temurin:21-jdk
+
+# Définir le répertoire de travail
 WORKDIR /app
+
+# Copier tout le projet
 COPY . /app
-RUN ./mvnw clean package -DskipTests
-CMD ["java", "--module-path", "/root/.m2/repository/org/openjfx/javafx-controls/21.0.2/:/root/.m2/repository/org/openjfx/javafx-fxml/21.0.2/:/root/.m2/repository/org/openjfx/javafx-base/21.0.2/:/root/.m2/repository/org/openjfx/javafx-graphics/21.0.2/", "--add-modules", "javafx.controls,javafx.fxml", "-jar", "target/cabinetPlus-1.0-SNAPSHOT.jar"]
+
+# Installer Maven
+RUN apt-get update && apt-get install -y maven
+
+# Build avec Maven en générant un fat JAR
+RUN mvn clean package -DskipTests \
+    && cp target/cabinetPlus-1.0-SNAPSHOT-shaded.jar /app/app.jar
+
+# Commande pour lancer le fat JAR
+CMD ["java", "-jar", "app.jar"]
