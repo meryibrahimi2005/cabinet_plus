@@ -95,7 +95,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.1.0</version>
                 <configuration>
-                    <mainClass>ma.cabinetplus.AppMain</mainClass>
+                    <mainClass>ma.cabinetplus.Main</mainClass>
                 </configuration>
             </plugin>
             <plugin>
