@@ -124,7 +124,17 @@ public class AppointmentManagementScreen {
                 "-fx-background-color: #9b59b6; -fx-text-fill: white;");
         consultationsButton.setOnAction(e -> openConsultations());
 
-        actionBar.getChildren().addAll(confirmButton, cancelButton, completeButton, refreshButton, consultationsButton);
+        Button statsButton = new Button("📊 Statistiques");
+        statsButton.setStyle("-fx-font-size: 12; -fx-padding: 8 15 8 15; " +
+                "-fx-background-color: #8e44ad; -fx-text-fill: white;");
+        statsButton.setOnAction(e -> openStatistics());
+
+        actionBar.getChildren().addAll(
+                confirmButton, cancelButton, completeButton,
+                refreshButton, consultationsButton, statsButton
+        );
+
+
         return actionBar;
     }
 
@@ -269,5 +279,10 @@ public class AppointmentManagementScreen {
     private void openConsultations() {
         ConsultationManagementScreen consultationScreen = new ConsultationManagementScreen(stage);
         consultationScreen.show();
+    }
+
+    private void openStatistics() {
+        StatisticsScreen statsScreen = new StatisticsScreen(stage);
+        statsScreen.show();
     }
 }

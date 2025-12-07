@@ -55,3 +55,6 @@ ON CONFLICT (username) DO NOTHING;
 INSERT INTO patient (nom, prenom, username, password, date_naissance, telephone, email, adresse, numero_dossier)
 VALUES ('patient', 'patient', 'patient', '1234', '1990-05-15', '06-12-34-56-78', 'pierre.martin@email.com', '123 Rue de la Paix', 'DOS-001')
 ON CONFLICT (username) DO NOTHING;
+
+-- Charger les vues matérialisées
+\i /docker-entrypoint-initdb.d/materialized_views.sql

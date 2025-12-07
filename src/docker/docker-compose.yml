@@ -14,6 +14,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./materialized_views.sql:/docker-entrypoint-initdb.d/02-materialized_views.sql
 
 volumes:
   postgres_data:
