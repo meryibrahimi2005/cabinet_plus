@@ -15,24 +15,14 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.control.TextMatchers.hasText;
 
-/**
- * Test fonctionnel pour l'écran d'authentification
- *
- * Ce test vérifie:
- * - L'affichage des champs username et password
- * - La connexion avec des identifiants valides
- * - Le message d'erreur avec des identifiants invalides
- * - Le bouton retour vers la sélection de rôle
- * - Pour les patients: le bouton "Créer un compte"
- */
+
 @ExtendWith(ApplicationExtension.class)
 class AuthenticationScreenTest {
 
     private Stage stage;
 
-    /**
-     * Setup pour le test Médecin
-     */
+
+    //Setup pour le test Médecin
     @Start
     public void start(Stage stage) {
         this.stage = stage;
@@ -40,9 +30,8 @@ class AuthenticationScreenTest {
         screen.show();
     }
 
-    /**
-     * Test 1: Vérifier que les champs de connexion sont affichés
-     */
+
+    //Test 1: Vérifier que les champs de connexion sont affiché
     @Test
     void devraitAfficherChampsConnexion(FxRobot robot) {
         // Assert
@@ -53,18 +42,16 @@ class AuthenticationScreenTest {
         assertNotNull(passwordField, "Le champ password doit être présent");
     }
 
-    /**
-     * Test 2: Vérifier le titre d'authentification Médecin
-     */
+
+    //Test 2: Vérifier le titre d'authentification Médecin
     @Test
     void devraitAfficherTitreAuthMedecin(FxRobot robot) {
         // Assert
         verifyThat("Authentification - Médecin", hasText("Authentification - Médecin"));
     }
 
-    /**
-     * Test 3: Connexion avec identifiants valides (médecin par défaut)
-     */
+
+    //Test 3: Connexion avec identifiants valides (médecin par défaut)
     @Test
     void connexionAvecIdentifiantsValides_DevraitNaviguerVersDashboard(FxRobot robot) {
         // Arrange
@@ -83,9 +70,8 @@ class AuthenticationScreenTest {
 
 
 
-    /**
-     * Test 6: Bouton retour vers la sélection de rôle
-     */
+
+    //Bouton retour vers la sélection de rôle
     @Test
     void clicSurBoutonRetour_DevraitNaviguerVersSelectionRole(FxRobot robot) {
         // Act
@@ -97,9 +83,8 @@ class AuthenticationScreenTest {
     }
 }
 
-/**
- * Tests spécifiques pour l'authentification Patient
- */
+
+//Tests spécifiques pour l'authentification Patient
 @ExtendWith(ApplicationExtension.class)
 class AuthenticationScreenPatientTest {
 
@@ -112,9 +97,7 @@ class AuthenticationScreenPatientTest {
         screen.show();
     }
 
-    /**
-     * Test 7: Vérifier que le bouton "Créer un compte" est présent pour les patients
-     */
+    //Vérifier que le bouton "Créer un compte" est présent pour les patients
     @Test
     void devraitAfficherBoutonCreerCompte(FxRobot robot) {
         // Assert
@@ -122,9 +105,7 @@ class AuthenticationScreenPatientTest {
         assertNotNull(creerCompteButton, "Le bouton Créer un compte doit être présent");
     }
 
-    /**
-     * Test 8: Clic sur "Créer un compte" navigue vers l'inscription
-     */
+    //Clic sur "Créer un compte" navigue vers l'inscription
     @Test
     void clicSurCreerCompte_DevraitNaviguerVersInscription(FxRobot robot) {
         // Act
@@ -134,9 +115,8 @@ class AuthenticationScreenPatientTest {
         verifyThat("Créer un compte Patient", hasText("Créer un compte Patient"));
     }
 
-    /**
-     * Test 9: Connexion patient valide (avec le patient par défaut)
-     */
+
+     //Test 9: Connexion patient valide (avec le patient par défaut)
     @Test
     void connexionPatientValide_DevraitNaviguerVersDashboard(FxRobot robot) {
         // Arrange

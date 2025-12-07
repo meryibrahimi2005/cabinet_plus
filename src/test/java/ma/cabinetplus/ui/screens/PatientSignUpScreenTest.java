@@ -16,16 +16,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.control.TextMatchers.hasText;
 
-/**
- * Test fonctionnel pour l'écran d'inscription patient
- *
- * Ce test vérifie:
- * - L'affichage de tous les champs du formulaire d'inscription
- * - La création d'un nouveau compte avec des données valides
- * - La validation des champs obligatoires
- * - La validation de l'unicité du username
- * - Le bouton retour vers l'authentification
- */
+
+//Test fonctionnel pour l'écran d'inscription patient
 @ExtendWith(ApplicationExtension.class)
 class PatientSignUpScreenTest {
 
@@ -54,18 +46,16 @@ class PatientSignUpScreenTest {
         assertNotNull(robot.lookup("Adresse:").query(), "Label Adresse doit être présent");
     }
 
-    /**
-     * Test 2: Vérifier le titre de la page
-     */
+
+    //Test 2: Vérifier le titre de la page
     @Test
     void devraitAfficherTitreInscription(FxRobot robot) {
         // Assert
         verifyThat("Créer un compte Patient", hasText("Créer un compte Patient"));
     }
 
-    /**
-     * Test 7: Bouton retour vers l'authentification
-     */
+
+    //Test 7: Bouton retour vers l'authentification
     @Test
     void clicSurBoutonRetour_DevraitNaviguerVersAuth(FxRobot robot) {
         // Act
